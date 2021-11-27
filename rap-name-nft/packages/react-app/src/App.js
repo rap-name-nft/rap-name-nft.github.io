@@ -118,7 +118,7 @@ function MintButton({ provider }) {
 
   const mintNextNft = async (numToMint, ether) => {
     await contract.mint(numToMint, {
-      gasLimit: 1000000 * numToMint,
+      gasLimit: 250000 * numToMint,
       value: ethers.utils.parseEther(ether.toString()) // adding this should fix
     })
   }
