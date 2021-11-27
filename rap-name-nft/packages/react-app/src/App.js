@@ -31,10 +31,10 @@ const Configuration = {
     network: 'mainnet',
     address: addresses.mainnetRapNameNft,
     infura: 'wss://mainnet.infura.io/ws/v3/ff20f5e62ffa435ea8bc23c49231cec8',
-    openseaURL: (token) => `https://opensea.io/assets/mainnet/${addresses.mainnetRapNameNft}/${token}`
+    openseaURL: (token) => `https://opensea.io/assets/${addresses.mainnetRapNameNft}/${token}`
   }
 }
-const config = Configuration.rinkeby;
+const config = Configuration.mainnet;
 
 function WalletButton({ provider, loadWeb3Modal, logoutOfWeb3Modal }) {
   const [account, setAccount] = useState("");
@@ -264,7 +264,11 @@ function App() {
       <Body>
         <img alt="cover photo" style={{'marginLeft': 'auto', 'maxWidth': '500px', 'marginRight': 'auto'}} src={"/coverphoto.png"} />
         <div style={{textAlign: 'center', margin: '10px'}}>every web3 rapper needs a web3 name
-          <div style={{fontSize: '20px', marginTop: '10px', marginBottom: '20px'}}>fully on-chain svg + metadata</div>
+          <div style={{fontSize: '20px', marginTop: '10px', marginBottom: '20px'}}>fully on-chain svg + metadata
+            <br/>
+            <br/>
+            <a style={{color: 'white', fontSize: '20px'}} href={"https://twitter.com/rap_name_nft"}>Twitter</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style={{color: 'white', fontSize: '20px'}} href={"https://discord.gg/QUqXQ6tq"}>Discord</a>
+          </div>
         </div>
         <MintButton provider={provider} />
         <br />
