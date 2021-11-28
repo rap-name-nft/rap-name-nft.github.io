@@ -14,27 +14,27 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Card from "@material-ui/core/Card";
 
 const Configuration = {
-  abi: abis.rapNameNft.abi,
+  abi: abis.rapNameNftv2.abi,
   rinkeby: {
     network: 'rinkeby',
-    address: addresses.rinkebyRapNameNft,
+    address: addresses.rinkebyRapNameNftv2,
     infura: 'wss://rinkeby.infura.io/ws/v3/ff20f5e62ffa435ea8bc23c49231cec8',
-    openseaURL: (token) => `https://testnets.opensea.io/assets/rinkeby/${addresses.rinkebyRapNameNft}/${token}`
+    openseaURL: (token) => `https://testnets.opensea.io/assets/rinkeby/${addresses.rinkebyRapNameNftv2}/${token}`
   },
   ropsten: {
     network: 'ropsten',
-    address: addresses.ropstenRapNameNft,
+    address: addresses.ropstenRapNameNftv2,
     infura: 'wss://ropsten.infura.io/ws/v3/ff20f5e62ffa435ea8bc23c49231cec8',
-    openseaURL: (token) => `https://ropsten.etherscan.io/token/${addresses.ropstenRapNameNft}?a=${token}`
+    openseaURL: (token) => `https://ropsten.etherscan.io/token/${addresses.ropstenRapNameNftv2}?a=${token}`
   },
   mainnet: {
     network: 'mainnet',
-    address: addresses.mainnetRapNameNft,
+    address: addresses.mainnetRapNameNftv2,
     infura: 'wss://mainnet.infura.io/ws/v3/ff20f5e62ffa435ea8bc23c49231cec8',
-    openseaURL: (token) => `https://opensea.io/assets/${addresses.mainnetRapNameNft}/${token}`
+    openseaURL: (token) => `https://opensea.io/assets/${addresses.mainnetRapNameNftv2}/${token}`
   }
 }
-const config = Configuration.mainnet;
+const config = Configuration.rinkeby;
 
 function WalletButton({ provider, loadWeb3Modal, logoutOfWeb3Modal }) {
   const [account, setAccount] = useState("");
@@ -114,11 +114,10 @@ function MintButton({ provider }) {
     return <div/>
   }
   const signer = provider.getSigner();
-  const contract = new Contract(config.address, abis.rapNameNft.abi, signer);
+  const contract = new Contract(config.address, abis.rapNameNftv2.abi, signer);
 
   const mintNextNft = async (numToMint, ether) => {
     await contract.mint(numToMint, {
-      gasLimit: 800000 * numToMint,
       value: ethers.utils.parseEther(ether.toString()) // adding this should fix
     })
   }
@@ -150,17 +149,17 @@ function GalleryItem({ account, rapNft, tokenId }) {
         'margin': '20px',
         'background': 'white',
         'width': '300px',
-        'height': '200px',
+        'height': '172px',
         'color': 'black',
         'overflowWrap': 'break-word',
         'fontSize': '14px'
       }}>
         <CardMedia style={{'position': 'relative'}}>
-          { isOwner ? (<div style={{'position': 'absolute', 'top': '5px', 'left': '5px', 'fontSize': '24px' }}>☑️️</div>) : <div /> }
+          { isOwner ? (<div style={{'position': 'absolute', 'top': '5px', 'left': '5px', 'fontSize': '24px' }}>✅️️</div>) : <div /> }
           <a  rel="noreferrer" target={"_blank"} href={config.openseaURL(tokenId)} style={{
             'textDecoration': 'unset', 'position': 'absolute', 'top': '5px', 'right': '5px', 'fontSize': '24px'
           }}>➡️️️</a>
-          <img alt={`${tokenId}`} src={ svgImage }  width={"500px"} height={"200px"}/>
+          <img alt={`${tokenId}`} src={ svgImage }  width={"100%"} height={"100%"}/>
         </CardMedia>
       </Card>
   )
@@ -196,7 +195,7 @@ function ButtonGroup({onMint}) {
               </Button>
             </div>
             <br />
-            <Button onClick={() => onMint(count, count * 0.02) } >Mint {count} ({count * 0.02} ETH)</Button>
+            <Button onClick={() => onMint(count, 0.0) } >Mint {count} ({0.0} ETH)</Button>
           </div>
         </div>
       </>
@@ -252,7 +251,7 @@ function App() {
       return;
     }
     const defaultProvider = getDefaultProvider(config.infura);
-    setRapNft(new Contract(config.address, abis.rapNameNft.abi, defaultProvider))
+    setRapNft(new Contract(config.address, abis.rapNameNftv2.abi, defaultProvider))
   }, [provider]);
 
 
